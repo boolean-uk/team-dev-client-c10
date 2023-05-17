@@ -10,6 +10,7 @@ import { ModalProvider } from "./context/modal";
 import Welcome from "./pages/welcome";
 
 const App = () => {
+    console.log("Blah")
 	return (
 		<>
 			<AuthProvider>
