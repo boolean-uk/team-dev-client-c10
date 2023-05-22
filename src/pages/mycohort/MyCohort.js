@@ -13,7 +13,7 @@ export default function MyCohort() {
 
   useEffect(() => {
     get(endpoint).then((data) => {
-      console.log("cohortsData", cohorts.data.users[0]);
+    //   console.log("cohortsData", cohorts.data.users[0]);
       return setCohorts(data);
     });
   }, []);
@@ -24,7 +24,7 @@ export default function MyCohort() {
 
   return (
     <>
-      {console.log("cohortsData", cohorts.data.users[0])}
+      {/* {console.log("cohortsData", cohorts.data.users[0])} */}
       <main>
         <Card>
           <h4>My Cohort</h4>
