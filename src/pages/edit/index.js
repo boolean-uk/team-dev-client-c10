@@ -3,25 +3,53 @@ import TextInput from "../../components/form/textInput";
 import "./style.css";
 import "../../styles/index.css";
 import LockIcon from "../../assets/icons/locIcon";
-import { get } from "../../service/apiClient";
+import { get, patch } from "../../service/apiClient";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const EditProfile = () => {
   const { userId } = useAuth();
-  const [user, setUser] = useState({});
+  const [userProfile, setUserProfile] = useState({});
   const [userInitials, setUserInitials] = useState(``);
+  const [user, setUser] = useState({ id: "" });
   const urlParams = useParams();
 
   useEffect(() => {
     async function getUserInfo() {
-      const userInfo = await get(`users/${urlParams.id}`);
+      const userInfo = await get(`users/${userId}`);
       setUser(userInfo.data.user);
+    }
+    getUserInfo();
+  });
+
+  useEffect(() => {
+    async function getUserInfo() {
+      const userInfo = await get(`users/${urlParams.id}`);
+      setUserProfile(userInfo.data.user);
       setUserInitials(getInitailsFromUser(userInfo.data.user));
     }
     getUserInfo();
-  }, [urlParams.id]);
+  });
+
+  useEffect(() => {
+    async function updateUser() {
+      await patch(`users/${userId}`, {
+        email: "",
+        password: "",
+        cohortId: 0,
+        role: "",
+        firstName: "",
+        lastName: "",
+        bio: "",
+        githubUrl: "",
+      }).then((response) => {
+        console.log("User updated successfully:", response.data);
+      });
+    }
+
+    updateUser();
+  }, [userId]);
 
   const userDisplayName = (user) => {
     return `${user.firstName} ${user.lastName}`;
