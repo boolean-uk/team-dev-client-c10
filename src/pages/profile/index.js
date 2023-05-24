@@ -18,7 +18,6 @@ const ViewProfile = () => {
   const [userProfile, setUserProfile] = useState({})
   const [userInitials, setUserInitials] = useState(``)
   const [user, setUser] = useState({id: ""})
-  const [userOwnsPage, setUserOwnsPage] = useState(false)
 
 
   useEffect(() => {
