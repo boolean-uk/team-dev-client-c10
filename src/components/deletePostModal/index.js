@@ -6,7 +6,7 @@ import './style.css'
 function DeletePostModal({ id, setTriggerUpdate }) {
   const { closeModal } = useModal()
 
-  const handleDelete = (e) => {
+  const handleDelete = () => {
       deleted(`posts/${id}`, {id})
       .then(() => {
         setTriggerUpdate(true)

@@ -6,28 +6,31 @@ import CogIcon from '../../assets/icons/cogIcon'
 import LocIcon from '../../assets/icons/locIcon'
 import './style.css'
 
-function OptionsButton({ showEditModal, showDeleteModal, authorId, currentUserId, postId, setTriggerUpdate}) {
+function OptionsButton({ showEditModal, showDeleteModal, authorId, currentUserId, postId, setTriggerUpdate, currentUser}) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
   const CascadingMenu = () => {
     return (
-        <Menu className="profile-circle-menu">
+      <Menu className="profile-circle-menu">
+        {
+          authorId !== currentUserId && 
             <MenuItem icon={<LocIcon />} text='Report' />
-            {authorId === currentUserId ? 
-            (
-              <>
-                <MenuItem icon={<CogIcon />} text='Edit' onClick={() => {
-                  setIsMenuVisible(false)
-                  showEditModal()
-                }}/>
-                <MenuItem icon={<DeleteIcon />} text='Delete' onClick={() => {
-                  setIsMenuVisible(false)
-                  showDeleteModal()
-                }}/>
-              </>
-            ) : <></>}
-            
-        </Menu>
+        }
+        {
+          authorId === currentUserId && 
+            <MenuItem icon={<CogIcon />} text='Edit' onClick={() => {
+              setIsMenuVisible(false)
+              showEditModal()
+            }}/>
+        }
+        {
+          (authorId === currentUserId || currentUser.role === 'TEACHER') && 
+            <MenuItem icon={<DeleteIcon />} text='Delete' onClick={() => {
+              setIsMenuVisible(false)
+              showDeleteModal()
+            }}/>
+        }
+      </Menu>
     )
   }
 
