@@ -6,10 +6,25 @@ import useAuth from "../../hooks/useAuth";
 import jwt_decode from "jwt-decode";
 import "./style.css";
 import DataIcon from "../../assets/icons/dataIcon";
+import LogIcon from "../../assets/icons/logIcon";
+import { useEffect, useState } from "react";
+import { getUsers } from "../../service/apiClient";
+
 
 const Navigation = () => {
   const { token } = useAuth();
   const { userId } = jwt_decode(token);
+  const [userRole, setUserRole] = useState('')
+
+  useEffect(() => {
+    getUsers()
+    .then(data => {
+        const currentUser = data.find(user => user.id === userId)
+        if (currentUser) {
+            setUserRole(currentUser.role.toLowerCase())
+        }
+    })
+  }, [userId])
 
   if (!token) {
     return null;
@@ -42,13 +57,16 @@ const Navigation = () => {
             <p>Cohort</p>
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/logs">
-            <DataIcon />
-            <p>Logs</p>
-          </NavLink>
-        </li>
-        
+        {
+          userRole === 'teacher' && (
+            <li>
+              <NavLink to="/logs">
+                <LogIcon />
+                <p>Logs</p>
+              </NavLink>
+            </li>
+          )
+        }
       </ul>
     </nav>
   );
