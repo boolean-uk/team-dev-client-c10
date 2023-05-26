@@ -15,6 +15,7 @@ import "../../styles/_buttons.css"
 import "./style.css";
 import ProfileButton from "../../components/profileButton";
 import Form from "../../components/form";
+import NameTagRole from "../../components/nameTagRole";
 
 
 
@@ -157,20 +158,7 @@ const Dashboard = () => {
                                {user.firstName.length !== 0 && (
                                  <>
                                 <ProfileButton id={user.id} initials= {`${user.firstName?.[0]}${user.lastName?.[0]}`} />
-                                   <div id="post-user-name">
-                                     <p>
-                                       {user.firstName} {user.lastName}
-                                  
-                                     </p>
-                                     <small>
-                                       {user.role[0]}
-                                       {user.role.toLowerCase().slice(1)}
-                                     </small>
-                                   </div>
-                                   <div className="edit-icon">
-                                     <p>...</p>
-                                   </div>
-                                  
+                                <NameTagRole user={user}/>
                                  </>
                                )}
                              </div>
@@ -190,21 +178,7 @@ const Dashboard = () => {
                                {user.firstName.length !== 0 && (
                                  <>
                                  <ProfileButton id={user.id} initials= {`${user.firstName?.[0]}${user.lastName?.[0]}`} />
-                                   <div className="name-tag-role">
-                                     <p id="searched-name">
-                                       {user.firstName} {user.lastName}
-                            
-                                     </p>
-                                     <div className="role">
-                                       {user.role[0]}
-                                       {user.role.toLowerCase().slice(1)}
-                                     </div>
-                                   </div>
-                                
-                                    <div className="edit-icon">
-                                     <p>...</p>
-                                   </div>
-                                   
+                                 <NameTagRole user={user}/>
                                  </>
                                )}
                              </div>
