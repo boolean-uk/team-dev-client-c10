@@ -60,7 +60,6 @@ const AuthProvider = ({ children }) => {
       throw new Error(res.data.error);
     }
     setToken(res.data.token);
-    console.log("at ver", profile);
     navigate("/verification");
   };
 
