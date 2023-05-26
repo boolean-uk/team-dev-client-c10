@@ -201,7 +201,6 @@ const Dashboard = () => {
               currentUser = {currentUser}
               users = {users}/>
           </Card>)}
-
         {currentUser.role === "TEACHER" && (
           <>
           <Card>
@@ -210,26 +209,14 @@ const Dashboard = () => {
           <Card>
           <h4>Students</h4>
           <hr className="line"/>
+          <br/>
           {students.map((user) => (
+            
                              <div className="nameSearch" key={user.id}>
                                {user.firstName.length !== 0 && (
                                  <>
                                  <ProfileButton id={user.id} initials= {`${user.firstName?.[0]}${user.lastName?.[0]}`} />
-                                   <div className="name-tag-role">
-                                     <p id="searched-name">
-                                       {user.firstName} {user.lastName}
-                            
-                                     </p>
-                                     <div className="role">
-                                       {user.role[0]}
-                                       {user.role.toLowerCase().slice(1)}
-                                     </div>
-                                   </div>
-                                
-                                    <div className="edit-icon">
-                                     <p>...</p>
-                                   </div>
-                                   
+                                <NameTagRole user={user}/>  
                                  </>
                                )}
                              </div>
@@ -238,7 +225,6 @@ const Dashboard = () => {
                            <hr className="line"/>
                            <br/>
                             <Link to={'/search'}><Button text={"All students"} classes="button offwhite"></Button></Link>
-          
           </Card>
           <Card>
             <p>List of teachers</p>
