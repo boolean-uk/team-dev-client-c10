@@ -99,9 +99,7 @@ const ProtectedRoute = ({ children }) => {
   if (!token) {
     return <Navigate to={"/login"} replace state={{ from: location }} />;
   }
-  // if (profile === undefined) {
-  //   return <p>loading</p>;
-  // }
+
   if (
     (profile === undefined || profile === null || !profile.firstName) &&
     location.pathname !== "/welcome"
