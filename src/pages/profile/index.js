@@ -23,7 +23,6 @@ const ViewProfile = () => {
     async function getUserInfo() {
       const userInfo = await get(`users/${userId}`);
       setUser(userInfo.data.user);
-      console.log('getting profile')
     }
 
     getUserInfo();
