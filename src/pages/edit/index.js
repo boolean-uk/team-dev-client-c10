@@ -182,8 +182,8 @@ const EditProfile = () => {
                   <textarea
                     rows=""
                     cols="40"
-                    className="textarea-small"
                     disabled
+                    className="textarea-small"
                     placeholder={cohortDisplayName(user.cohortId)}
                   ></textarea>
                   <div className="lock-icon">
