@@ -7,25 +7,35 @@ import { get } from "../../service/apiClient";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { patch } from "../../service/apiClient";
+import { useParams } from "react-router-dom";
 
 const EditProfile = () => {
   const { userId } = useAuth();
+  const urlParams = useParams();
   const [userInitials, setUserInitials] = useState(``);
   const [user, setUser] = useState({ id: "" });
   const [updatedProfile, setUpdatedProfile] = useState({});
+  const [loggedInUser, setLoggedInUser] = useState({});
 
   useEffect(() => {
     async function getUserInfo() {
       const userInfo = await get(`users/${userId}`);
-      setUser(userInfo.data.user);
-      setUserInitials(getInitailsFromUser(userInfo.data.user));
+      setLoggedInUser(userInfo.data.user);
     }
     getUserInfo();
   }, [userId]);
 
+  useEffect(() => {
+    async function getUserInfo() {
+      const userInfo = await get(`users/${urlParams.id}`);
+      setUser(userInfo.data.user);
+      setUserInitials(getInitailsFromUser(userInfo.data.user));
+    }
+    getUserInfo();
+  }, [urlParams.id]);
+
   const updateUser = async () => {
-    const response = await patch(`users/${userId}`, updatedProfile);
-    console.log("User updated successfully:", response.data);
+    const response = await patch(`users/${urlParams.id}`, updatedProfile);
   };
 
   const handleSaveButtonClick = async () => {
@@ -47,43 +57,31 @@ const EditProfile = () => {
   };
 
   const handleFirstNameChange = (e) => {
-    console.log(updatedProfile);
     setUpdatedProfile({ ...updatedProfile, firstName: e.target.value });
-    if (e.target.value === "") {
-      console.log("Please input information");
-    }
+  };
+
+  const handleCohortIdChange = (e) => {
+    setUpdatedProfile({ ...updatedProfile, cohortId: Number(e.target.value) });
   };
 
   const handleGitHubUrlChange = (e) => {
-    console.log(updatedProfile);
     setUpdatedProfile({ ...updatedProfile, githubUrl: e.target.value });
-    if (e.target.value === "") {
-      console.log("Please input information");
-    }
   };
 
   const handleEmailChange = (e) => {
-    console.log(updatedProfile);
     setUpdatedProfile({ ...updatedProfile, email: e.target.value });
-    if (e.target.value === "") {
-      console.log("Please input information");
-    }
+  };
+
+  const handleRoleChange = (e) => {
+    setUpdatedProfile({ ...updatedProfile, role: e.target.value });
   };
 
   const handleLastNameChange = (e) => {
-    console.log(updatedProfile);
     setUpdatedProfile({ ...updatedProfile, lastName: e.target.value });
-    if (e.target.value === "") {
-      console.log("Please input information");
-    }
   };
 
   const hanleBioChange = (e) => {
-    console.log(updatedProfile);
     setUpdatedProfile({ ...updatedProfile, bio: e.target.value });
-    if (e.target.value === "") {
-      console.log("Please input information");
-    }
   };
 
   return (
@@ -151,13 +149,23 @@ const EditProfile = () => {
               <div className="training-info-content info-grid">
                 <small className="padding-field-name">Role*</small>
                 <div className="training-info">
-                  <textarea
-                    rows="1"
-                    cols="40"
-                    className="textarea-small"
-                    disabled
-                    placeholder={user.role}
-                  ></textarea>
+                  {loggedInUser.role === "TEACHER" ? (
+                    <textarea
+                      rows="1"
+                      cols="40"
+                      className="textarea-small"
+                      placeholder={user.role}
+                      onChange={handleRoleChange}
+                    ></textarea>
+                  ) : (
+                    <textarea
+                      rows="1"
+                      cols="40"
+                      className="textarea-small"
+                      disabled
+                      placeholder={user.role}
+                    ></textarea>
+                  )}
                   <div className="lock-icon">
                     <LockIcon />
                   </div>
@@ -186,6 +194,23 @@ const EditProfile = () => {
                     className="textarea-small"
                     placeholder={cohortDisplayName(user.cohortId)}
                   ></textarea>
+                  {loggedInUser.role === "TEACHER" ? (
+                    <textarea
+                      rows=""
+                      cols="40"
+                      className="textarea-small"
+                      placeholder={user.cohortId}
+                      onChange={handleCohortIdChange}
+                    ></textarea>
+                  ) : (
+                    <textarea
+                      rows=""
+                      cols="40"
+                      disabled
+                      className="textarea-small"
+                      placeholder={cohortDisplayName(user.cohortId)}
+                    ></textarea>
+                  )}
                   <div className="lock-icon">
                     <LockIcon />
                   </div>
