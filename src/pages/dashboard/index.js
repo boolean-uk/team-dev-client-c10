@@ -15,6 +15,7 @@ import "../../styles/_buttons.css"
 import "./style.css";
 import ProfileButton from "../../components/profileButton";
 import Form from "../../components/form";
+import ListOfCohorts from "../../components/listOfCohorts";
 
 
 
@@ -231,7 +232,7 @@ const Dashboard = () => {
         {currentUser.role === "TEACHER" && (
           <>
           <Card>
-            <p>List of Cohorts</p>
+            <ListOfCohorts />
           </Card>
           <Card>
           <h4>Students</h4>

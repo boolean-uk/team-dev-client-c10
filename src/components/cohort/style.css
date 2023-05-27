@@ -1,0 +1,15 @@
+.cohort-item {
+    display: grid;
+    grid-template-columns: 70px 1fr;    
+    align-items: center;
+    padding-top: 5px;
+}
+
+.cohort-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+h5 {
+    font-size: 20px;
+}
