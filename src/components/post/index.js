@@ -182,7 +182,8 @@ const Post = ({
             authorId={authorId} 
             currentUserId={currentUserId} 
             postId={id} 
-            setTriggerUpdate={setTriggerUpdate}/>
+            setTriggerUpdate={setTriggerUpdate}
+            currentUser={currentUser}/>
         </section>
 
         <section className="post-content">
