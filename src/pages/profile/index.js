@@ -24,8 +24,10 @@ const ViewProfile = () => {
       const userInfo = await get(`users/${userId}`);
       setUser(userInfo.data.user);
     }
+
     getUserInfo();
-  });
+
+  },[userId]);
 
   const handleClick = () => {
     navigate(`/profile/${urlParams.id}/edit`);
