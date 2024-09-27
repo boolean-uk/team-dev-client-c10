@@ -25,17 +25,14 @@ const AuthProvider = ({ children }) => {
     if (token) {
       const decoded = jwt_decode(token);
       setUserId(decoded.userId);
-	  if (profile && profile.firstName) {
-		return
-	  }
-      getUserProfile(decoded.userId).then((profile) => {
-        setProfile(profile);
-		if (profile.firstName) navigate("/");
-      });
+      if (profile && profile.firstName)
+        getUserProfile(decoded.userId).then((profile) => {
+          setProfile(profile);
+          if (profile.firstName) navigate("/");
+        });
     }
     if (storedToken && !token) {
       setToken(storedToken);
-
     }
   }, [navigate, token, profile]);
 
@@ -101,10 +98,11 @@ const ProtectedRoute = ({ children }) => {
   if (!token) {
     return <Navigate to={"/login"} replace state={{ from: location }} />;
   }
-  if (profile === undefined) {
-	return <p>loading</p>
-  }
-  if ((profile === null || !profile.firstName) && location.pathname !== "/welcome") {
+
+  if (
+    (profile === undefined || profile === null || !profile.firstName) &&
+    location.pathname !== "/welcome"
+  ) {
     return <Navigate to={"/welcome"} replace state={{ from: location }} />;
   }
 
